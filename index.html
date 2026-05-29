@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Галерея 40 инструментов</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #070b1f;
+            --card: rgba(15, 20, 45, 0.85);
+            --border: rgba(255,255,255,0.08);
+            --text: #e3e8ff;
+            --muted: #9aa6d1;
+            --accent: #7c5cff;
+            --accent-2: #3dd5ff;
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+        }
+        body {
+            background: radial-gradient(circle at top left, rgba(125, 92, 255, 0.18), transparent 25%),
+                        radial-gradient(circle at bottom right, rgba(61, 213, 255, 0.18), transparent 20%),
+                        var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100%;
+            line-height: 1.6;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 50%);
+            pointer-events: none;
+        }
+        html { scroll-behavior: smooth; }
+        .page {
+            width: min(1200px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 32px 0 80px;
+        }
+        header {
+            display: grid;
+            gap: 24px;
+            padding: 32px 28px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow);
+            background: rgba(8, 12, 34, 0.82);
+            position: relative;
+            overflow: hidden;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(124,92,255,0.15), transparent 30%),
+                        radial-gradient(circle at bottom left, rgba(61,213,255,0.12), transparent 28%);
+            pointer-events: none;
+        }
+        header > * { position: relative; }
+        .brand {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .brand h1 {
+            font-size: clamp(2.7rem, 4vw, 4.5rem);
+            max-width: 10ch;
+            letter-spacing: -0.06em;
+        }
+        .brand p {
+            color: var(--muted);
+            max-width: 56ch;
+            font-size: 1rem;
+        }
+        .nav {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: var(--text);
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 11px 18px;
+            border-radius: 999px;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            font-size: 0.95rem;
+        }
+        .nav a:hover {
+            transform: translateY(-2px);
+            background: rgba(124,92,255,0.12);
+            border-color: rgba(124,92,255,0.4);
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 32px;
+            align-items: center;
+            margin-top: 16px;
+        }
+        .hero-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .hero-card h2 {
+            font-size: clamp(1.8rem, 2vw, 2.4rem);
+            margin-bottom: 14px;
+        }
+        .hero-card p { color: var(--muted); }
+        .top-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+        .top-stat {
+            background: rgba(255,255,255,0.04);
+            padding: 22px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .top-stat strong { display: block; font-size: 1.9rem; margin-bottom: 8px; color: #fff; }
+        .top-stat span { color: var(--muted); }
+        section { margin-top: 42px; }
+        .section-title { font-size: clamp(2rem, 2.5vw, 3rem); margin-bottom: 18px; }
+        .section-subtitle { color: var(--muted); margin-bottom: 28px; max-width: 65ch; }
+        .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+        .category {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+        .category h3 { margin-bottom: 14px; color: var(--accent); }
+        .category p { color: var(--muted); margin-bottom: 20px; }
+        .tool-list { list-style: none; display: grid; gap: 14px; }
+        .tool-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 14px;
+            padding: 18px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.02);
+        }
+        .tool-meta { display: grid; gap: 6px; }
+        .tool-meta strong { font-size: 1rem; }
+        .tool-meta span { color: var(--muted); font-size: 0.95rem; }
+        .tool-link {
+            align-self: center;
+            justify-self: end;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c5cff, #3dd5ff);
+            color: #071020;
+            text-decoration: none;
+            font-size: 1.15rem;
+            transition: transform 0.2s ease;
+        }
+        .tool-link:hover { transform: scale(1.05); }
+        footer {
+            margin-top: 48px;
+            padding: 24px 28px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--muted);
+            background: rgba(6, 9, 26, 0.8);
+        }
+        footer a { color: var(--accent-2); text-decoration: none; }
+        @media (max-width: 920px) {
+            .hero-grid, .cards { grid-template-columns: 1fr; }
+            .top-stats { grid-template-columns: 1fr; }
+            footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header>
+            <div class="brand">
+                <div>
+                    <h1>40 AI инструментов для креативных задач</h1>
+                    <p>Премиальная подборка из 40 лучших ИИ-сервисов на дизайн, программирование, тексты и видео. Быстрый доступ к ссылкам и удобный обзор для вдохновения.</p>
+                </div>
+                <nav class="nav">
+                    <a href="#design">Дизайн</a>
+                    <a href="#code">Программирование</a>
+                    <a href="#text">Тексты</a>
+                    <a href="#video">Видео</a>
+                </nav>
+            </div>
+            <div class="hero-grid">
+                <div class="hero-card">
+                    <h2>Стильный AI-путеводитель</h2>
+                    <p>Каждая категория включает 10 проверенных инструментов. От генерации концептов и логотипов до создания кода, статей и эффектного видео-контента.</p>
+                    <div class="top-stats">
+                        <div class="top-stat"><strong>40</strong><span>ИИ-инструментов</span></div>
+                        <div class="top-stat"><strong>4</strong><span>направления</span></div>
+                        <div class="top-stat"><strong>1</strong><span>страница</span></div>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <h2>Как использовать</h2>
+                    <p>Нажмите на любую иконку в списке, чтобы открыть официальную страницу сервиса. Все ссылки ведут к рабочим платформам, которые уже помогают дизайнерам, разработчикам, копирайтерам и видео-мейкерам.</p>
+                </div>
+            </div>
+        </header>
+
+        <section id="design">
+            <h2 class="section-title">Дизайн</h2>
+            <p class="section-subtitle">10 лучших ИИ для создания графики, брендовых визуалов, иллюстраций и презентаций.</p>
+            <div class="cards">
+                <div class="category">
+                    <h3>Design AI</h3>
+                    <p>Инструменты для быстрого создания арт-концептов, логотипов, макетов и стильных визуалов.</p>
+                    <ul class="tool-list">
+                        <li class="tool-item"><div class="tool-meta"><strong>Canva</strong><span>Готовые шаблоны и AI-редактор для графики и презентаций.</span></div><a class="tool-link" href="https://www.canva.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Figma AI</strong><span>Прямо в Figma генерируйте интерфейсы, иконки и текстуры.</span></div><a class="tool-link" href="https://www.figma.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Adobe Firefly</strong><span>Генерация изображений и эффектов на основе текста.</span></div><a class="tool-link" href="https://www.adobe.com/firefly" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Midjourney</strong><span>Сильнейший генератор художественных изображений.</span></div><a class="tool-link" href="https://www.midjourney.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>DALL·E 3</strong><span>Текст в изображение от OpenAI для эффектных кадров.</span></div><a class="tool-link" href="https://openai.com/dall-e-3" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Runway</strong><span>AI для генерации сцен, магии и креативных визуальных эффектов.</span></div><a class="tool-link" href="https://runway.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Looka</strong><span>Создание логотипов и фирменного стиля за минуту.</span></div><a class="tool-link" href="https://looka.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Remove.bg</strong><span>Мгновенное удаление фона для фото и предметов.</span></div><a class="tool-link" href="https://www.remove.bg" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Khroma</strong><span>Генератор гармоничных цветовых палитр на базе AI.</span></div><a class="tool-link" href="https://khroma.co" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Uizard</strong><span>Конвертация мокапов в готовый UI и дизайн-блоки.</span></div><a class="tool-link" href="https://uizard.io" target="_blank" rel="noreferrer">→</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="code">
+            <h2 class="section-title">Программирование</h2>
+            <p class="section-subtitle">10 ИИ-помощников для быстрого кода, автодополнений, рефакторинга и обучающих подсказок.</p>
+            <div class="cards">
+                <div class="category">
+                    <h3>Code AI</h3>
+                    <p>Современные инструменты для генерации, проверки и ускорения разработки.</p>
+                    <ul class="tool-list">
+                        <li class="tool-item"><div class="tool-meta"><strong>GitHub Copilot</strong><span>Автодополнение кода с контекстом из репозитория.</span></div><a class="tool-link" href="https://github.com/features/copilot" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Replit Ghostwriter</strong><span>AI-помощник для веб и скриптов прямо в редакторе.</span></div><a class="tool-link" href="https://replit.com/site/ghostwriter" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Tabnine</strong><span>Автозаполнение кода для всех языков.</span></div><a class="tool-link" href="https://www.tabnine.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Codeium</strong><span>Скоростные подсказки и генерация функций.</span></div><a class="tool-link" href="https://www.codeium.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Amazon CodeWhisperer</strong><span>Автогенерация AWS-совместимого кода.</span></div><a class="tool-link" href="https://aws.amazon.com/codewhisperer/" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>JetBrains AI Assistant</strong><span>AI-поддержка разработки в среде JetBrains.</span></div><a class="tool-link" href="https://www.jetbrains.com/ai/" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>CoderPad AI</strong><span>Генерация примеров и тестовых задач.</span></div><a class="tool-link" href="https://coderpad.io" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Sourcegraph</strong><span>Поиск по коду с AI-подсказками и анализом.</span></div><a class="tool-link" href="https://sourcegraph.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Codiga</strong><span>Автоматический анализ кода и исправления.</span></div><a class="tool-link" href="https://www.codiga.io" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>DeepSource</strong><span>AI-рецензия и качество кода на лету.</span></div><a class="tool-link" href="https://deepsource.io" target="_blank" rel="noreferrer">→</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="text">
+            <h2 class="section-title">Тексты</h2>
+            <p class="section-subtitle">10 сервисов для создания копирайта, статей, сторителлинга, рерайта и SEO-контента.</p>
+            <div class="cards">
+                <div class="category">
+                    <h3>Text AI</h3>
+                    <p>Лучшие инструменты, чтобы писать быстрее, грамотнее и креативнее.</p>
+                    <ul class="tool-list">
+                        <li class="tool-item"><div class="tool-meta"><strong>ChatGPT</strong><span>Универсальный генератор текстов от OpenAI.</span></div><a class="tool-link" href="https://chat.openai.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Jasper</strong><span>Создание маркетинговых и продающих текстов.</span></div><a class="tool-link" href="https://www.jasper.ai" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Writesonic</strong><span>Генерация блогов, постов и описаний.</span></div><a class="tool-link" href="https://writesonic.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Copy.ai</strong><span>Креативные тексты для рекламы и социальных сетей.</span></div><a class="tool-link" href="https://www.copy.ai" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Rytr</strong><span>Быстрое создание структурированных текстов.</span></div><a class="tool-link" href="https://rytr.me" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Grammarly</strong><span>Редактор для чистого, профессионального текста.</span></div><a class="tool-link" href="https://www.grammarly.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>QuillBot</strong><span>Рерайт, резюме и преобразование текста.</span></div><a class="tool-link" href="https://quillbot.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>CopySmith</strong><span>Массовый генератор описаний и идей.</span></div><a class="tool-link" href="https://copysmith.ai" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Peppertype</strong><span>Создает текстовые блоки для маркетинга и SEO.</span></div><a class="tool-link" href="https://www.peppertype.ai" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>ShortlyAI</strong><span>Сочетает простоту и скорость генерации длинных текстов.</span></div><a class="tool-link" href="https://www.shortlyai.com" target="_blank" rel="noreferrer">→</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="video">
+            <h2 class="section-title">Видео</h2>
+            <p class="section-subtitle">10 AI для создания, редактирования и монтажа видеоконтента с эффектами и озвучкой.</p>
+            <div class="cards">
+                <div class="category">
+                    <h3>Video AI</h3>
+                    <p>От генерации роликов на основе текста до мультимедийного монтажа в облаке.</p>
+                    <ul class="tool-list">
+                        <li class="tool-item"><div class="tool-meta"><strong>Synthesia</strong><span>Генерация видео с виртуальными ведущими и озвучкой.</span></div><a class="tool-link" href="https://www.synthesia.io" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Pictory</strong><span>Автоматический монтаж и субтитры для видео.</span></div><a class="tool-link" href="https://pictory.ai" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Descript</strong><span>Редактор видео и аудио с AI-транскрипцией.</span></div><a class="tool-link" href="https://www.descript.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Runway</strong><span>Видеоэффекты и генерация кадров на основе AI.</span></div><a class="tool-link" href="https://runway.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Lumen5</strong><span>Создание коротких видеороликов из текста или блога.</span></div><a class="tool-link" href="https://lumen5.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>InVideo</strong><span>Готовые видеошаблоны и AI-редактор для социальных сетей.</span></div><a class="tool-link" href="https://invideo.io" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Veed.io</strong><span>Удобный монтаж видео и автоматические субтитры.</span></div><a class="tool-link" href="https://www.veed.io" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>CapCut</strong><span>Мобильный редактор с AI-эффектами и наложением музыки.</span></div><a class="tool-link" href="https://www.capcut.com" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>Elai.io</strong><span>Видео с AI-ведущими для презентаций и обучения.</span></div><a class="tool-link" href="https://elai.io" target="_blank" rel="noreferrer">→</a></li>
+                        <li class="tool-item"><div class="tool-meta"><strong>DeepBrain AI</strong><span>Генерация реалистичных AI-спикеров и видео.</span></div><a class="tool-link" href="https://www.deepbrain.io" target="_blank" rel="noreferrer">→</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div>Современная подборка AI-инструментов 2026.</div>
+            <div>Открывайте сервисы, пробуйте новые идеи и создавайте профессиональный контент.</div>
+        </footer>
+    </main>
+</body>
+</html>
